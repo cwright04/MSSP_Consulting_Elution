@@ -1,0 +1,30 @@
+install.packages("openxlsx")
+library("openxlsx")
+library("tidyverse")
+library("dplyr")
+
+file <- "Part 1 - counts and relative percentages.xlsx"
+
+Elution_Raw_S1 <- read.xlsx(file,sheet = 1, colNames = TRUE, startRow = 2)
+Elution_Raw_S2 <- read.xlsx(file,sheet = 2, colNames = TRUE, startRow = 2)
+Elution_Raw_S3 <- read.xlsx(file,sheet = 3, colNames = TRUE, startRow = 2)
+Elution_Raw_S4 <- read.xlsx(file,sheet = 4, colNames = TRUE, startRow = 2)
+
+Elution_Raw_S1<- Elution_Raw_S1 %>% select( -ncol(Elution_Raw_S1)) %>% mutate(group = 1) 
+Elution_Raw_S2<- Elution_Raw_S2 %>% select( -ncol(Elution_Raw_S2)) %>% mutate(group = 2)
+Elution_Raw_S3<- Elution_Raw_S3 %>% select( -ncol(Elution_Raw_S3)) %>% mutate(group = 3)
+Elution_Raw_S4<- Elution_Raw_S4 %>% select( -ncol(Elution_Raw_S4)) %>% mutate(group = 4)
+
+Elution_Raw <- rbind(Elution_Raw_S1,Elution_Raw_S2,Elution_Raw_S3,Elution_Raw_S4)
+
+
+Elution_clean <- Elution_Raw %>% separate(col=Sample,
+                    into = c("Replicate1", "Elution"),
+                    sep = "E#",
+                    fill = "right") %>% separate(col=Replicate1,
+                                          into = c("x", "Replicate"),
+                                          sep = "#", 
+                                          fill = "right") %>% select(-1) %>% select(-4)
+
+names(Elution_clean)[4] <- "Relative.Pct"
+
