@@ -35,7 +35,7 @@ Elution_wide4 <- Elution_wide %>% filter(group==4)
 #Sample 5 replicates out of Group1 1000 times(Bootstrap)
 G1b<-data.frame(NA,NA)%>% setNames(c("Elution2","TotalElution"))
 for(i in 1:1000){bs<- sample_n(Elution_wide1,5,replace = TRUE)[,3:4];
-sub<-data.frame(sum(bs[1]),sum(bs))%>% setNames(c("Elution2","TotalElution"));
+sub<-data.frame(sum(bs[2]),sum(bs))%>% setNames(c("Elution2","TotalElution"));
 G1b <- bind_rows(G1b,sub)}
 
 #Delete first NA row and calculate the proportion of elution 2 in each row
