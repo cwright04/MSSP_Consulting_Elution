@@ -56,6 +56,14 @@ summary(one.way)
 plot(one.way)
 leveneTest(log_ratio ~ group, data = Elution_wide)
 
+######Tukey–Kramer method; Basically equivalent to t-test otherwise this correct for experiment-wise error rate##########
+##Assumptions for Tukey-Kramer method###
+#i)Observations are independent within and among groups.
+#ii)The groups for each mean in the test are normally distributed.
+#iii)There is equal within-group variance across the groups associated with each mean in the test (homogeneity of variance).
+tukey.one.way<-TukeyHSD(one.way)
+tukey.one.way
+
 ####pairwise t test#####
 with(Elution_wide, t.test(log_ratio[group == 1], log_ratio[group == 2]))
 with(Elution_wide, t.test(log_ratio[group == 1], log_ratio[group == 3]))
