@@ -38,7 +38,7 @@ names(Elution_clean)[4] <- "Relative.Pct"
 ####Create Wide Dataset######
 #Covert long format to wide format (way 2)
 Elution_wide <- pivot_wider(Elution_clean, names_from = Elution, values_from = c(Sperm.Count, Relative.Pct))
-
+Elution_wide <- mutate(Elution_wide, group=as.factor(group))
 
 
 ##Create log(elution1_porportion/elution2_proportion)

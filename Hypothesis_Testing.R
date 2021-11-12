@@ -50,11 +50,13 @@ G1b95CI <- G1b[c(25,975),3]
 library(tidyverse)
 library(broom)
 library(AICcmodavg)
-
+library(car)
 one.way <- aov(log_ratio ~ group, data = Elution_wide)
 summary(one.way)
+plot(one.way)
+leveneTest(log_ratio ~ group, data = Elution_wide)
 
-####Compairwise t test#####
+####pairwise t test#####
 with(Elution_wide, t.test(log_ratio[group == 1], log_ratio[group == 2]))
 with(Elution_wide, t.test(log_ratio[group == 1], log_ratio[group == 3]))
 with(Elution_wide, t.test(log_ratio[group == 1], log_ratio[group == 4]))
