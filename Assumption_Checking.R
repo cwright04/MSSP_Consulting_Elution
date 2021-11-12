@@ -62,5 +62,5 @@ elution_boxplot2 <- Elution_wide %>% ggplot(mapping = aes(x = group, y = log_rat
 Density_Plots
 QQ_Plots
 elution_boxplot
-    elution_boxplot2
+elution_boxplot2
     

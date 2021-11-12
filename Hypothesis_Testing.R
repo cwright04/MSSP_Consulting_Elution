@@ -32,12 +32,30 @@ library(car)
   summary(glht(one.way, linfct = mcp(group = "Tukey")))
 
 ####pairwise t test#####
-ttest1 <- with(Elution_wide, t.test(log_ratio[group == 1], log_ratio[group == 2]))
-with(Elution_wide, t.test(log_ratio[group == 1], log_ratio[group == 3]))
-with(Elution_wide, t.test(log_ratio[group == 1], log_ratio[group == 4]))
-with(Elution_wide, t.test(log_ratio[group == 2], log_ratio[group == 3]))
-with(Elution_wide, t.test(log_ratio[group == 2], log_ratio[group == 4]))
-with(Elution_wide, t.test(log_ratio[group == 3], log_ratio[group == 4]))
+ttest12 <- with(Elution_wide, t.test(log_ratio[group == 1], log_ratio[group == 2]))
+ttest13 <-with(Elution_wide, t.test(log_ratio[group == 1], log_ratio[group == 3]))
+ttest14 <-with(Elution_wide, t.test(log_ratio[group == 1], log_ratio[group == 4]))
+ttest23 <-with(Elution_wide, t.test(log_ratio[group == 2], log_ratio[group == 3]))
+ttest24 <-with(Elution_wide, t.test(log_ratio[group == 2], log_ratio[group == 4]))
+ttest34 <-with(Elution_wide, t.test(log_ratio[group == 3], log_ratio[group == 4]))
+
+P_Value12 <- ttest12$p.value
+P_Value13 <- ttest13$p.value
+P_Value14 <- ttest14$p.value
+P_Value23 <- ttest23$p.value
+P_Value24 <- ttest24$p.value
+P_Value34 <- ttest34$p.value
+
+T_Test_P_Value <- data.frame(cbind(P_Value12,P_Value13,P_Value14,P_Value23,P_Value24,P_Value34))
+T_Test_P_Value <- T_Test_P_Value %>% mutate(alpha = .05/6)
+names(T_Test_P_Value) <- c("Group1 vs Group2 P-Value",
+                           "Group1 vs Group3 P-Value",
+                           "Group1 vs Group4 P-Value",
+                           "Group2 vs Group3 P-Value",
+                           "Group2 vs Group4 P-Value",
+                           "Group3 vs Group4 P-Value",
+                           "Alpha Level")
+
 
 
 
