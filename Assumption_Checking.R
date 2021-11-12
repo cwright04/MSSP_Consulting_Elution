@@ -8,7 +8,9 @@ col=rainbow(length(levels(factor(Elution_wide$Total_Sperm))))[factor(Elution_wid
 elution_boxplot<- Elution_wide %>% ggboxplot(x="group", y="log_ratio", add="jitter", 
                      add.params=list(shape=21, color = "black", fill=col, size=3))
 
-
+elution_boxplot2 <- Elution_wide %>% ggplot(mapping = aes(x = group, y = log_ratio, group = group)) + 
+    geom_boxplot() +
+  geom_point(position = "jitter",mapping = aes(size = Total_Sperm, color=Total_Sperm))
 ##################################################CHECK FOR NORMALITY######################################################
     require(gridExtra)
 
@@ -38,3 +40,5 @@ elution_boxplot<- Elution_wide %>% ggboxplot(x="group", y="log_ratio", add="jitt
     
     grid.arrange(dens, QQ, ncol =1)
     elution_boxplot
+    elution_boxplot2
+    

@@ -45,3 +45,19 @@ G1b <- G1b%>%mutate(prop = Elution2 / TotalElution)%>%slice(-1)
 G1b <- G1b[order(G1b$prop),]
 G1b95CI <- G1b[c(25,975),3]
 
+
+########One way ANOVA#########
+library(tidyverse)
+library(broom)
+library(AICcmodavg)
+
+one.way <- aov(log_ratio ~ group, data = Elution_wide)
+summary(one.way)
+
+####Compairwise t test#####
+with(Elution_wide, t.test(log_ratio[group == 1], log_ratio[group == 2]))
+with(Elution_wide, t.test(log_ratio[group == 1], log_ratio[group == 3]))
+with(Elution_wide, t.test(log_ratio[group == 1], log_ratio[group == 4]))
+with(Elution_wide, t.test(log_ratio[group == 2], log_ratio[group == 3]))
+with(Elution_wide, t.test(log_ratio[group == 2], log_ratio[group == 4]))
+with(Elution_wide, t.test(log_ratio[group == 3], log_ratio[group == 4]))
