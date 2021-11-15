@@ -13,10 +13,10 @@ Elution_Raw_S3 <- read.xlsx(file,sheet = 3, colNames = TRUE, startRow = 2)
 Elution_Raw_S4 <- read.xlsx(file,sheet = 4, colNames = TRUE, startRow = 2)
 
 #Remove unecessary columns and add a group indicator
-Elution_Raw_S1<- Elution_Raw_S1 %>% select( -ncol(Elution_Raw_S1)) %>% mutate(group = 1) 
-Elution_Raw_S2<- Elution_Raw_S2 %>% select( -ncol(Elution_Raw_S2)) %>% mutate(group = 2)
-Elution_Raw_S3<- Elution_Raw_S3 %>% select( -ncol(Elution_Raw_S3)) %>% mutate(group = 3)
-Elution_Raw_S4<- Elution_Raw_S4 %>% select( -ncol(Elution_Raw_S4)) %>% mutate(group = 4)
+Elution_Raw_S1<- Elution_Raw_S1 %>% dplyr::select( -ncol(Elution_Raw_S1)) %>% mutate(group = 1) 
+Elution_Raw_S2<- Elution_Raw_S2 %>% dplyr::select( -ncol(Elution_Raw_S2)) %>% mutate(group = 2)
+Elution_Raw_S3<- Elution_Raw_S3 %>% dplyr::select( -ncol(Elution_Raw_S3)) %>% mutate(group = 3)
+Elution_Raw_S4<- Elution_Raw_S4 %>% dplyr::select( -ncol(Elution_Raw_S4)) %>% mutate(group = 4)
 
 #Stack all groups of data
 Elution_Raw <- rbind(Elution_Raw_S1,Elution_Raw_S2,Elution_Raw_S3,Elution_Raw_S4)
@@ -28,7 +28,7 @@ Elution_clean <- Elution_Raw %>% separate(col=Sample,
                     fill = "right") %>% separate(col=Replicate1,
                                           into = c("x", "Replicate"),
                                           sep = "#", 
-                                          fill = "right") %>% select(-1) %>% select(-4)
+                                          fill = "right") %>% dplyr::select(-1) %>% dplyr::select(-4)
 
 #rename the relative percentage to match the naming convention of the other variables
 names(Elution_clean)[4] <- "Relative.Pct"

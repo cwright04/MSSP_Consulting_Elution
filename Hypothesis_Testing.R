@@ -3,7 +3,7 @@ source("DataProcessing.R", echo=FALSE)
 ########One way ANOVA#########
 library(tidyverse)
 library(broom)
-library(AICcmodavg)
+#library(AICcmodavg)
 library(car)
 
 #Conduct test and review summary
@@ -11,8 +11,8 @@ library(car)
   summary(one.way)
 
 #Check normality assumptions
-  plot(one.way)
-  leveneTest(log_ratio ~ group, data = Elution_wide)
+  # plot(one.way)
+  levene_result <- leveneTest(log_ratio ~ group, data = Elution_wide)
   
   # Extract the residuals
   aov_residuals <- residuals(object = one.way )
