@@ -54,9 +54,21 @@ elution_boxplot2 <- Elution_wide %>% ggplot(mapping = aes(x = group, y = log_rat
     P_Value3 <- Norm_Test_3$p.value
     P_Value4 <- Norm_Test_4$p.value
     
-    Shap_Test_P_Value <- data.frame(cbind(P_Value1,P_Value2,P_Value3,P_Value4))
-    Shap_Test_P_Value <- Shap_Test_P_Value %>% mutate(alpha = .05)
-    names(Shap_Test_P_Value) <- c("Group1 P-Value","Group2 P-Value","Group3 P-Value","Group4 P-Value","Alpha Level")
+    Statistic1 <- Norm_Test_1$statistic
+    Statistic2 <- Norm_Test_2$statistic
+    Statistic3 <- Norm_Test_3$statistic
+    Statistic4 <- Norm_Test_4$statistic
+    
+    g1 <- data.frame(cbind(Statistic1,P_Value1)) %>% mutate(Group = "Group 1") %>% rename(Statistic = Statistic1, P_Value = P_Value1)
+    g2 <- data.frame(cbind(Statistic2,P_Value2)) %>% mutate(Group = "Group 2") %>% rename(Statistic = Statistic2, P_Value = P_Value2)
+    g3 <- data.frame(cbind(Statistic3,P_Value3)) %>% mutate(Group = "Group 3") %>% rename(Statistic = Statistic3, P_Value = P_Value3)
+    g4 <- data.frame(cbind(Statistic4,P_Value4)) %>% mutate(Group = "Group 4") %>% rename(Statistic = Statistic4, P_Value = P_Value4)
+    
+    Shap_Test <- rbind(g1,g2,g3,g4)
+    
+    # Shap_Test_P_Value <- data.frame(cbind(P_Value1,P_Value2,P_Value3,P_Value4))
+    # Shap_Test_P_Value <- Shap_Test_P_Value %>% mutate(alpha = .05)
+    # names(Shap_Test_P_Value) <- c("Group1 P-Value","Group2 P-Value","Group3 P-Value","Group4 P-Value","Alpha Level")
     
     
 Density_Plots
