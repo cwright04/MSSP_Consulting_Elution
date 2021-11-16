@@ -14,32 +14,32 @@ elution_boxplot2 <- Elution_wide %>% ggplot(mapping = aes(x = group, y = log_rat
   geom_point(position = "jitter",mapping = aes(size = Total_Sperm, color=Total_Sperm)) + 
   ylab("Log Ratio of Elution 1 to Elution 2") + xlab("Group") + 
   ggtitle("Boxplot of Log Ratios of Elution Counts by Group") +
-  theme(plot.title = element_text(size = (30)), 
-       legend.title = element_text(size =(20)), 
-       legend.text = element_text(size =(20)), 
-       axis.title = element_text(size = (20)),
-       axis.text = element_text(size = (20)))
+  theme(plot.title = element_text(size = (10)), 
+       legend.title = element_text(size =(8)), 
+       legend.text = element_text(size =(8)), 
+       axis.title = element_text(size = (8)),
+       axis.text = element_text(size = (8)))
 ##################################################CHECK FOR NORMALITY######################################################
     require(gridExtra)
 
   #Density Plot
     Density_Plots <- ggplot()+ geom_density(Elution_wide, mapping = aes(x=log_ratio), alpha=0.25, color = "blue", fill = "blue") +
       ylab("Density") +xlab("") + ggtitle("Density plot of Log Ratio of Elution 1 Count to Elution 2 Count") +
-      theme(plot.title = element_text(size = (30)), 
-            legend.title = element_text(size =(20)), 
-            legend.text = element_text(size =(20)), 
-            axis.title = element_text(size = (20)),
-            axis.text = element_text(size = (20))) +
+      theme(plot.title = element_text(size = (10)), 
+            legend.title = element_text(size =(8)), 
+            legend.text = element_text(size =(8)), 
+            axis.title = element_text(size = (8)),
+            axis.text = element_text(size = (8))) +
       facet_wrap(~ Elution_wide$group, scale = "free_y", ncol = 2) 
 
 
   #QQPlot
     QQ_Plots <- ggqqplot(Elution_wide$log_ratio,main = "QQ plot of Log Ratio of Elution 1 Count to Elution 2 Count") +
-      theme(plot.title = element_text(size = (30)), 
-            legend.title = element_text(size =(20)), 
-            legend.text = element_text(size =(20)), 
-            axis.title = element_text(size = (20)),
-            axis.text = element_text(size = (20))) +
+      theme(plot.title = element_text(size = (10)), 
+            legend.title = element_text(size =(8)), 
+            legend.text = element_text(size =(8)), 
+            axis.title = element_text(size = (8)),
+            axis.text = element_text(size = (8))) +
       facet_wrap(~ Elution_wide$group, scale = "free_y", ncol = 2) 
 
 
