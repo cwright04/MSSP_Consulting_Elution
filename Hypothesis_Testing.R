@@ -10,10 +10,18 @@ library(car)
   one.way <- aov(log_ratio ~ group, data = Elution_wide)
   summary(one.way)
 
-#Check normality assumptions
+#Check heterogeneity assumption
   # plot(one.way)
   levene_result <- leveneTest(log_ratio ~ group, data = Elution_wide)
+  levene_result12 <- leveneTest(log_ratio ~ group, data =filter(Elution_wide, group==1 | group==2))
+  levene_result13 <- leveneTest(log_ratio ~ group, data =filter(Elution_wide, group==1 | group==3))
+  levene_result14 <- leveneTest(log_ratio ~ group, data =filter(Elution_wide, group==1 | group==4))
+  levene_result23 <- leveneTest(log_ratio ~ group, data =filter(Elution_wide, group==2 | group==3))
+  levene_result24 <- leveneTest(log_ratio ~ group, data =filter(Elution_wide, group==2 | group==4))
+  levene_result34 <- leveneTest(log_ratio ~ group, data =filter(Elution_wide, group==3 | group==4))
   
+  
+#Check normality assumptions
   # Extract the residuals
   aov_residuals <- residuals(object = one.way )
   # Run Shapiro-Wilk test
