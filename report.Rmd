@@ -94,14 +94,20 @@ The head five line of original data is shown below. The shown data only contain 
 
 ```{r,echo=FALSE}
 library(knitr)
-kable(head(Elution_Raw,5))
+kable(head(Elution_Raw,5)) %>%
+  kable_styling(position = "center") %>%
+  kable_styling(latex_options = "HOLD_position")
 ```
+
+
 
 After cleaning and processing data, we clean the original data into following format and also calculate the log odds for each replicates. 
 
+
 ```{r,echo=FALSE}
 kable(head(Elution_wide,5)) %>% 
-  kable_styling(latex_options="scale_down")
+  kable_styling(latex_options="scale_down") %>%
+  kable_styling(latex_options = "HOLD_position")
 ```
 
 We visualize our log odds ratio of each replicate with boxplots. A box plot or boxplot is a method for graphically depicting groups of numerical data through their quartiles. Box plots may also have lines extending from the boxes indicating variability outside the upper and lower quartiles. In our case, the value of the x-axis represents the group belonging to this replicate. The value of the y-axis represents the log-odds value of Elution 1 to Elution 2 for this replicate. The darker blue and smaller spots represent that this replicate has a small total sperm number from two elution times. The lighter and bigger spots represent that this replicate has a large total sperm number from two elution times. 
@@ -134,7 +140,10 @@ QQ_Plots
 To be more precise, we test for Shapiro Test. We extracted all p-value from four groups and summary into below chart. The null hyphothesis for Shapiro Test is that the population is normally distributed. Thus, if the p value is less than the chosen alpha level, then the null hypothesis is rejected and there is evidence that the data tested are not normally distributed. On the other hand, if the p value is greater than the chosen alpha level, then the null hypothesis (that the data came from a normally distributed population) can not be rejected. In our case, our alpha value is 0.05. All groups' p-value are larger than 0.05. Thus, we accept the null hypothesis. We can conclude that all four groups are normal distributed.
 
 ```{r,echo=FALSE}
-kable(Shap_Test)
+rownames(Shap_Test) <- NULL
+kable(Shap_Test)%>%
+  kable_styling(position = "center") %>%
+  kable_styling(latex_options = "HOLD_position")
 ```
 
 ### b. Homogeneous
@@ -160,7 +169,9 @@ For Tukey multiple pairwise-comparsions, we attched the result as below chart. A
 tukey <- as.data.frame(round(tukey.one.way$group,2))
 rownames(tukey) <- c("Group 2-1","Group 3-1","Group 4-1","Group 3-2","Group 4-2","Group 4-3")
 colnames(tukey) <- c("Diff","Lower Bound","Upper Bound","p-value")
-kable(tukey, align="c")
+kable(tukey, align="c") %>%
+  kable_styling(position = "center") %>%
+  kable_styling(latex_options = "HOLD_position")
 ```
 
 
