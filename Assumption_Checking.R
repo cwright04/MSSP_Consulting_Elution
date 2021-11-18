@@ -19,6 +19,17 @@ elution_boxplot2 <- Elution_wide %>% ggplot(mapping = aes(x = group, y = log_rat
        legend.text = element_text(size =(8)), 
        axis.title = element_text(size = (8)),
        axis.text = element_text(size = (8)))
+
+elution_boxplot3 <- Elution_wide %>% ggplot(mapping = aes(x = group, y = ratio, group = group)) + 
+  geom_boxplot() +
+  geom_point(position = "jitter",mapping = aes(size = Total_Sperm, color=Total_Sperm)) + 
+  ylab("Ratio of Elution 1 to Elution 2") + xlab("Group") + 
+  ggtitle("Boxplot of Ratios of Elution Counts by Group") +
+  theme(plot.title = element_text(size = (10)), 
+        legend.title = element_text(size =(8)), 
+        legend.text = element_text(size =(8)), 
+        axis.title = element_text(size = (8)),
+        axis.text = element_text(size = (8)))
 ##################################################CHECK FOR NORMALITY######################################################
     require(gridExtra)
 

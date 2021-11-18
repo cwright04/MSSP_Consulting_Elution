@@ -43,6 +43,7 @@ Elution_wide <- mutate(Elution_wide, group=as.factor(group))
 
 ##Create log(elution1_porportion/elution2_proportion)
 Elution_wide$log_ratio <- log(Elution_wide$Relative.Pct_1/Elution_wide$Relative.Pct_2) 
+Elution_wide$ratio <- Elution_wide$Relative.Pct_1/Elution_wide$Relative.Pct_2
 
 #Create total sperm count
 Elution_wide$Total_Sperm <- Elution_wide$Sperm.Count_1+Elution_wide$Sperm.Count_2
@@ -51,3 +52,4 @@ Elution_wide1 <- Elution_wide %>% filter(group==1)
 Elution_wide2 <- Elution_wide %>% filter(group==2)
 Elution_wide3 <- Elution_wide %>% filter(group==3)
 Elution_wide4 <- Elution_wide %>% filter(group==4)
+
