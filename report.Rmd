@@ -1,6 +1,6 @@
 ---
 title: "Formal Report of Elution experiment "
-author: "Kosuke Sasaki, Carolyn Nora Wright, Guangze Yu"
+author: "Kosuke Sasaki, Carolyn Wright, Guangze Yu"
 date: "11/12/2021"
 output: pdf_document
 ---
@@ -8,7 +8,6 @@ output: pdf_document
 ```{r,message=FALSE,warning=FALSE,echo=FALSE,fig.show='hide'}
 library(kableExtra)
 source("DataProcessing.R", echo=FALSE)
-source("normality_check.R", echo=FALSE)
 source("Assumption_Checking.R", echo=FALSE)
 source("Hypothesis_Testing.R", echo=FALSE) 
 ```
@@ -74,13 +73,13 @@ The setting of the experiment is as follows:
 
 # III. Major test method  
 
-Our experiment data structure is already shown above. Based on the character of our data, we decide to use log odds to eliminate the influence of different sample sizes for different replicates. Log odds are defined as the chances of success divided by the chances of failure. In our case, log odds are defined by the probability of the number of sperm of first elution divided by the probability of the number of sperm of second elution. The reason is that using log odds is easily updated with new data.
+Our experiment data structure is already shown above. Based on the character of our data, we decide to use log odds to eliminate the influence of different sample sizes for different replicates. Log odds are defined as the chances of success divided by the chances of failure. In our case, log odds are defined by the probability of the number of sperm of first elution divided by the probability of the number of sperm of second elution. The reason is that using log odds is easily updated with new data. The advantage for log odds is that it is easy to visualize variables without changing the characters of variables and also make variables distributed more normal. It will avoid violating assumption of any further test. 
 
 Then, we use one-way ANOVA (analysis of variance), also known as one-factor ANOVA, which is an extension of independent two-samples t-test for comparing means in a situation where there are more than two groups.
 
 There are two major assumptions for one-way ANOVA. The data are normally distributed and the variance across groups is homogeneous.
 
-To check the normality, we check the density plot for each group. The density plot is a representation of the distribution of a numeric variable. It uses a kernel density estimate to show the probability density function of the variable. In our case, we use density plots for each group whether they have normal distribution or not. Then, we plot the QQ (quantile-quantile) plot for each group. QQ plot is a graphical technique for determining if two data sets come from populations with a common distribution. To be precise, we test for Shapiro Test. Shapiro Test is a test of normality in frequentist statistics. In our setting, we choose the alpha value as 0.05. 
+To check the normality, we check the density plot for each group. The density plot is a representation of the distribution of a numeric variable. It uses a kernel density estimate to show the probability density function of the variable. In our case, we use density plots for each group whether they have normal distribution or not. Then, we plot the QQ (quantile-quantile) plot for each group. QQ plot is a graphical technique for determining if two data sets come from populations with a normal distribution. To be precise, we test for Shapiro Test. Shapiro Test is a test of normality in frequentist statistics. In our setting, we choose the alpha value as 0.05. 
 
 Then, we check whether the variance across groups is homogeneous. The residuals versus fits plot can be used to check the homogeneity of variances. Also, we test Levene’s test, which is less sensitive to departures from the normal distribution in case our data is not a normal distribution.  
 
@@ -101,7 +100,8 @@ kable(head(Elution_Raw,5))
 After cleaning and processing data, we clean the original data into following format and also calculate the log odds for each replicates. 
 
 ```{r,echo=FALSE}
-kable(head(Elution_wide,5))
+kable(head(Elution_wide,5)) %>% 
+  kable_styling(latex_options="scale_down")
 ```
 
 We visualize our log odds ratio of each replicate with boxplots. A box plot or boxplot is a method for graphically depicting groups of numerical data through their quartiles. Box plots may also have lines extending from the boxes indicating variability outside the upper and lower quartiles. In our case, the value of the x-axis represents the group belonging to this replicate. The value of the y-axis represents the log-odds value of Elution 1 to Elution 2 for this replicate. The darker blue and smaller spots represent that this replicate has a small total sperm number from two elution times. The lighter and bigger spots represent that this replicate has a large total sperm number from two elution times. 
@@ -120,21 +120,21 @@ As the description in part III., our steps are density plots, the QQ plots and S
 
 Density plots for four groups are shown below. From density plots, we can investigate that four groups have approximate bell shape. 
 
-```{r,echo=FALSE}
+```{r,echo=FALSE,out.width='80%',out.height='70%'}
 Density_Plots
 ```
 
 
 QQ plots for four groups are shown below. From QQ plots, we can investigate that four groups approximate within the estimated range. 
 
-```{r,echo=FALSE}
+```{r,echo=FALSE,out.width='80%',out.height='70%'}
 QQ_Plots
 ```
 
 To be more precise, we test for Shapiro Test. We extracted all p-value from four groups and summary into below chart. The null hyphothesis for Shapiro Test is that the population is normally distributed. Thus, if the p value is less than the chosen alpha level, then the null hypothesis is rejected and there is evidence that the data tested are not normally distributed. On the other hand, if the p value is greater than the chosen alpha level, then the null hypothesis (that the data came from a normally distributed population) can not be rejected. In our case, our alpha value is 0.05. All groups' p-value are larger than 0.05. Thus, we accept the null hypothesis. We can conclude that all four groups are normal distributed.
 
 ```{r,echo=FALSE}
-kable(Shap_Test_P_Value)
+kable(Shap_Test)
 ```
 
 ### b. Homogeneous
@@ -147,20 +147,27 @@ print(levene_result)
 
 # 3. ANOVA analysis
 
-After checking the assumptions of ANOVA analysis, we can test ANOVA over four groups. The null hypothesis is that there is no significiant difference between groups. We attached the result of ANOVA below. As the p-value is less than the significance level 0.05, we can conclude that there are significant differences between the groups highlighted with “*" in the model summary. Also, we test for the normality of ANOVA residual. The p-value is larger than the alpha value. We can conclude that the residual is normal distributed. 
+After checking the assumptions of ANOVA analysis, we can test ANOVA over four groups. The null hypothesis is that there is no significiant difference between groups. We attached the result of ANOVA below. Since the p-value is smaller than the alpha value, we can conclude that there must be at least one group is siginificiant different than other groups. Then, we test for Tukey multiple pairwise-comparsions. 
 
-```{r}
+
+```{r,echo=FALSE}
 summary(one.way)
+```
+
+For Tukey multiple pairwise-comparsions, we attched the result as below chart. As the p-value is less than the significance level 0.05, we can conclude that there are significant differences between the group 2-1 and the group 4-1. We can also valid from 95% confidence interval. The confident interval difference between group 2 and group 1 doesn't contain 0. The confident intervaldifference between group 4 and group 1 doesn't contain 0. Also, we test for the normality of ANOVA residual. The p-value is larger than the alpha value. We can conclude that the residual is normal distributed. 
+
+```{r,echo=FALSE}
+tukey <- as.data.frame(round(tukey.one.way$group,2))
+rownames(tukey) <- c("Group 2-1","Group 3-1","Group 4-1","Group 3-2","Group 4-2","Group 4-3")
+colnames(tukey) <- c("Diff","Lower Bound","Upper Bound","p-value")
+kable(tukey, align="c")
+```
+
+
+```{r,echo=FALSE}
 shapiro.test(x = aov_residuals )
 ```
 
-In one-way ANOVA test, a significant p-value indicates that some of the group means are different, but we don’t know which pairs of groups are different.Then, we perform multiple pairwise-comparison, to determine if the mean difference between specific pairs of group are statistically significant. We summary the pairwise comparison' p-value below.
-
-```{r}
-kable(T_Test_P_Value)%>% 
-  kable_styling(latex_options="scale_down")
-```
-
-
 # V. Conclusion 
 
+Based on our anlysis of ANOVA, if the p-value is smaller than our alpha value,we can conclude that there is significant difference between groups. Then, we conclude that there is significiant difference between the ratio of group 2 and group 1. Also, there is significant difference between the ratio of group 4 and group 1. 
