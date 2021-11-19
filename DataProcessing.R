@@ -1,7 +1,9 @@
 # install.packages("openxlsx")
+#install.packages("pwr")
 library("openxlsx")
 library("tidyverse")
 library("dplyr")
+library(pwr)
 
 #set path name
 file <- "Part 1 - counts and relative percentages.xlsx"
@@ -53,3 +55,9 @@ Elution_wide2 <- Elution_wide %>% filter(group==2)
 Elution_wide3 <- Elution_wide %>% filter(group==3)
 Elution_wide4 <- Elution_wide %>% filter(group==4)
 
+#Sample size Calculation
+meansd <- Elution_wide %>% group_by(group) %>%  summarise_at(vars(log_ratio), funs(mean,sd))
+meandif <- mean(meansd$log_ratio[-1])-meansd$log_ratio[1]
+meansd <- meansd %>% mutate(sd2 = sd^2) 
+pooledsd <- sqrt(mean(meansd$sd2))
+samplesize <- pwr.t.test(d=meandif/pooledsd, sig.level=0.05/6, power=0.80, type="two.sample")

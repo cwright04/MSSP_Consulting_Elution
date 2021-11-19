@@ -196,4 +196,5 @@ kable(tukey, align="c") %>%
 
 # V. Conclusion 
 
-Based on our anlaysis of ANOVA, if the p-value is smaller than our alpha value,we can conclude that there is significant difference between groups. Then, based on the Tukey multiple pairwise-comparisons, we can conclude that there is significiant difference between the ratio of group 2 and group 1. Also, there is significant difference between the ratio of group 4 and group 1. 
+Based on our analysis of ANOVA, if the p-value is smaller than our alpha value,we can conclude that there is significant difference between groups. Then, based on the Tukey multiple pairwise-comparisons, we can conclude that there is a significant difference between the ratio of group 2 and group 1 as well as between group 4 and group 1. Whereas we cannot find any significant difference between group 3 and group1. This could be due to sampling error because the ratio of group 3 should be greater than group 2 theoretically.
+To detect the difference between the group 3 and group 1 at the power of 80% if any, 14 replicates for each group would be needed.
