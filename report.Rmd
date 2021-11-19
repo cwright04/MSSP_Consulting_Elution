@@ -137,31 +137,40 @@ QQ plots for the four groups are shown below. From QQ plots, we can see that the
 QQ_Plots
 ```
 
-\newpage
 
 To be more precise, we used the Shapiro Test to check this assumption numerically. The null hyphothesis for Shapiro Test is that the population is normally distributed. Thus, if the p value is less than the chosen alpha level, then the null hypothesis is rejected and there is evidence that the data tested are not normally distributed. On the other hand, if the p value is greater than the chosen alpha level, then the null hypothesis (that the data came from a normally distributed population) can not be rejected. In our case, our alpha value is 0.05. All groups' p-value are larger than 0.05. Thus, we accept the null hypothesis. We can conclude that all four groups are normally distributed.
 
 
-\begin{table}[]
+```{=latex}
+\begin{table}[!h]
 \centering
 \begin{tabular}{lll}
 \hline
 \multicolumn{3}{|c|}{Shapiro Test}   \\ \hline
-Group   & Test Statistic & P-Value   \\ \hline
-Group 1 & 0.9107267      & 0.2860200 \\ \hline
-Group 2 & 0.9433447      & 0.5907949 \\ \hline
-Group 3 & 0.9416273      & 0.5712591 \\ \hline
-Group 4 & 0.8890707      & .1655346  \\ \hline
+\multicolumn{1}{|c|}{Group}   & \multicolumn{1}{|c|}{Test Statistic} & \multicolumn{1}{|c|}{P-Value}  \\ \hline
+\multicolumn{1}{|c|}{Group 1} & \multicolumn{1}{|c|}{0.9107267}      & \multicolumn{1}{|c|}{0.2860200} \\ \hline
+\multicolumn{1}{|c|}{Group 2} & \multicolumn{1}{|c|}{0.9433447}      & \multicolumn{1}{|c|}{0.5907949} \\ \hline
+\multicolumn{1}{|c|}{Group 3} & \multicolumn{1}{|c|}{0.9416273}      & \multicolumn{1}{|c|}{0.5712591} \\ \hline
+\multicolumn{1}{|c|}{Group 4} & \multicolumn{1}{|c|}{0.8890707}      & \multicolumn{1}{|c|}{.1655346}  \\ \hline
 \end{tabular}
 \end{table}
+```
 
 
 ### b. Homogeneous
 
 As the described in Part III, we used Levene’s test to test the variance across groups. The null hypothesis is that the population variances are equal. In our case, the p-value is larger than 0.05. Thus, we accept the null hypothesis. We can concluse the pupulation variances are equal.
 
-```{r,echo=FALSE}
-print(levene_result)
+```{=latex}
+\begin{table}[!h]
+\centering
+\begin{tabular}{|cc|}
+\hline
+\multicolumn{2}{|c|}{\textbf{Levene's Test For Homogeneity of Variance}} \\ \hline
+\multicolumn{1}{|c|}{F-value} & \multicolumn{1}{|c|}{P-Value} \\ \hline
+\multicolumn{1}{|c|}{1.4241} & \multicolumn{1}{|c|}{.2517} \\ \hline
+\end{tabular}
+\end{table}
 ```
 
 # 3. ANOVA analysis
@@ -170,14 +179,31 @@ After checking the assumptions of the ANOVA analysis, we ran an ANOVA test scros
 
 <header>ANOVA Results</header>
 
-```{r,echo=FALSE}
-summary(one.way)
+```{=latex}
+\begin{table}[!h]
+\centering
+\begin{tabular}{|ccllll|}
+\hline
+\multicolumn{6}{|c|}{\textbf{ANOVA Results}} \\ \hline
+\multicolumn{1}{|c|}{} & \multicolumn{1}{c|}{Df} & \multicolumn{1}{l|}{Sum Sq} & \multicolumn{1}{l|}{Mean Sq} & \multicolumn{1}{l|}{F-Value} & P-Value \\ \hline
+\multicolumn{1}{|c|}{group} & \multicolumn{1}{c|}{3} & \multicolumn{1}{l|}{23.20} & \multicolumn{1}{l|}{7.732} & \multicolumn{1}{l|}{5.8} & .00243 \\ \hline
+\multicolumn{1}{|l|}{Residuals} & \multicolumn{1}{l|}{36} & \multicolumn{1}{l|}{47.99} & \multicolumn{1}{l|}{1.333} & \multicolumn{1}{l|}{} &  \\ \hline
+\end{tabular}
+\end{table}
 ```
 
 <header>Validation of ANOVA - Shapiro Test of residuals</header>
 
-```{r,echo=FALSE}
-shapiro.test(x = aov_residuals )
+```{=latex}
+\begin{table}[!h]
+\centering
+\begin{tabular}{|cc|}
+\hline
+\multicolumn{2}{|c|}{\textbf{Shapiro-Wilk normality test}} \\ \hline
+\multicolumn{1}{|c|}{Test Statistic} & P-Value \\ \hline
+\multicolumn{1}{|c|}{.96515} & .2501 \\ \hline
+\end{tabular}
+\end{table}
 ```
 
 The results for the Tukey multiple pariwise-comparisons, are listed below. As the p-value is less than the significance level 0.05, we can conclude that there are significant differences between group 2 and group 1 as well as between group 4 and group 1. We can also see this from looking at the 95% confidence interval. The confidence interval relating to the comparison between group 2 and group 1 does not contain 0. Additionally, the confidence interval relating to the comparison between group 4 and group 1 doesn't contain 0. 
