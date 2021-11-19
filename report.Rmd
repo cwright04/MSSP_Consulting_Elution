@@ -92,7 +92,7 @@ After checking these assumptions, we used a one-way ANOVA to test whether there 
 
 The first five lines of original data is shown below. The shown data only contains part of the information of group 1. The full data contains all of the information for the four different groups with each of the 10 replicates. 
 
-```{r,echo=FALSE}
+```{r,echo=FALSE, warning = FALSE}
 library(knitr)
 kable(head(Elution_Raw,5)) %>%
   kable_styling(position = "center") %>%
@@ -104,7 +104,7 @@ kable(head(Elution_Raw,5)) %>%
 Next, we transformed the original data into the following format and calculated the log ratio for each replicate. 
 
 
-```{r,echo=FALSE}
+```{r,echo=FALSE, warning = FALSE}
 kable(head(Elution_wide,5)) %>% 
   kable_styling(latex_options="scale_down") %>%
   kable_styling(latex_options = "HOLD_position")
@@ -114,7 +114,7 @@ We visualized log ratio of the number of counts of elution 1 to elution 2 in eac
 
 Based on the graph, group 1 seems to have a mean log ratio lower than that of the other three groups.
 
-```{r,echo=FALSE}
+```{r,echo=FALSE, warning = FALSE}
 elution_boxplot2
 ```
 
