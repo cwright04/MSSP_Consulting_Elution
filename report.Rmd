@@ -73,7 +73,7 @@ The setting of the experiment is as follows:
 
 # III. Significant Difference Testing Method  
 
-Our experiment data structure is already shown above. Based on the character of our data, we decide to use log odds to eliminate the influence of different sample sizes for different replicates. Log odds are defined as the chances of success divided by the chances of failure. In our case, log odds are defined by the probability of the number of sperm of first elution divided by the probability of the number of sperm of second elution. The reason is that using log odds is easily updated with new data. The advantage for log odds is that it is easy to visualize variables without changing the characters of variables and also make variables distributed more normal. It will avoid violating assumption of any further test. 
+Our experiment data structure is already shown above. Based on the character of our data, we decide to use log ratio of the number of counts of elution 1 to elution 2 instead of ratio to compare the number of counts of elution 1 and 2 between the groups. Log transformation can make it easy to see the difference of the mean ratios between the groups as well as reduce the skewness of the distribution of the ratio, which makes the distribution closer to the normal distribution.
 
 Then, we used one-way ANOVA (analysis of variance), also known as one-factor ANOVA, which is an extension of independent two-samples t-test for comparing means in a situation where there are more than two groups.
 
@@ -101,7 +101,7 @@ kable(head(Elution_Raw,5)) %>%
 
 
 
-Next, we transformed the original data into the following format and calculated the log odds for each replicate. 
+Next, we transformed the original data into the following format and calculated the log ratio for each replicate. 
 
 
 ```{r,echo=FALSE}
@@ -110,9 +110,9 @@ kable(head(Elution_wide,5)) %>%
   kable_styling(latex_options = "HOLD_position")
 ```
 
-We visualized our log odds ratio of each replicate with box plots. A box plot is a method for graphically depicting groups of numerical data through their quartiles. Box plots may also have lines extending from the boxes indicating variability outside the upper and lower quartiles. In our case, the value of the x-axis represents the group belonging to this replicate. The value of the y-axis represents the log-odds value of Elution 1 to Elution 2 for this replicate. The darker blue and smaller points represent that this replicate has a small total sperm number from two elution times. The lighter and bigger points represent that this replicate has a large total sperm number from two elution times. 
+We visualized log ratio of the number of counts of elution 1 to elution 2 in each replicate as a blue dot with error bar shown as a red line. The error bar represents 95% confidence interval extending around the mean of log ratios in each group which is shown as a red dot. The darker blue and smaller point represents smaller total sperm number from two elution times. The lighter and bigger point represents a larger total sperm number from two elution times. 
 
-From the boxplots, we can investigate whether group 1 has a statistically lower log-odds median ratio than that of the other three groups. Note: There is one outlier for both group 2 and group 3. 
+Based on the graph, group 1 seems to have a mean log ratio lower than that of the other three groups.
 
 ```{r,echo=FALSE}
 elution_boxplot2
@@ -164,7 +164,7 @@ As the described in Part III, we used Levene’s test to test the variance acros
 print(levene_result)
 ```
 
-# 3. ANOVA analysis
+## 3. ANOVA analysis
 
 After checking the assumptions of the ANOVA analysis, we ran an ANOVA test scross the four groups. The null hypothesis is that there is no significiant difference between groups. We attached the result of ANOVA below. Since the p-value is smaller than the alpha value, we can conclude that there must be at least one group is significiantly different than other groups. To validate this test, we also tested the ANOVA residuals for the normalityl. The p-value is larger than the alpha value. We can conclude that the residual is normal distributed.  Howvever, this test does not specify which groups contain the differences. To identify the specific groups that differ we used Tukey multiple pairwise-comparsions. 
 
@@ -191,10 +191,13 @@ kable(tukey, align="c") %>%
   kable_styling(latex_options = "HOLD_position")
 ```
 
+## 4. Sample size calculation
 
+We also calculated sample size needed to detect any difference in the mean log ratio of the counts between group 1 and any other group with time of elution 1 longer than 30 minutes. 
+Assuming the true mean of group 1 is 1.42, the true mean of any group with time of elution 1 larger than 30 minutes is the mean of those of group 2, 3 and 4, or 3.05, and the pooled standard deviation is 1.15, the needed sample size is 14 for each group at the power of 0.8 and 0.008 significance level.
 
 
 # V. Conclusion 
 
 Based on our analysis of ANOVA, if the p-value is smaller than our alpha value,we can conclude that there is significant difference between groups. Then, based on the Tukey multiple pairwise-comparisons, we can conclude that there is a significant difference between the ratio of group 2 and group 1 as well as between group 4 and group 1. Whereas we cannot find any significant difference between group 3 and group1. This could be due to sampling error because the ratio of group 3 should be greater than group 2 theoretically.
-To detect the difference between the group 3 and group 1 at the power of 80% if any, 14 replicates for each group would be needed.
+To detect the difference between the group 3 and group 1, 14 replicates for each group would be needed.
