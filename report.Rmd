@@ -137,6 +137,7 @@ QQ plots for the four groups are shown below. From QQ plots, we can see that the
 QQ_Plots
 ```
 
+\newpage
 
 To be more precise, we used the Shapiro Test to check this assumption numerically. The null hyphothesis for Shapiro Test is that the population is normally distributed. Thus, if the p value is less than the chosen alpha level, then the null hypothesis is rejected and there is evidence that the data tested are not normally distributed. On the other hand, if the p value is greater than the chosen alpha level, then the null hypothesis (that the data came from a normally distributed population) can not be rejected. In our case, our alpha value is 0.05. All groups' p-value are larger than 0.05. Thus, we accept the null hypothesis. We can conclude that all four groups are normally distributed.
 
