@@ -94,7 +94,7 @@ The head five line of original data is shown below. The shown data only contain 
 
 ```{r,echo=FALSE}
 library(knitr)
-kable(head(Elution_Raw,5)) %>%
+kable(head(Elution_clean,5)) %>%
   kable_styling(position = "center") %>%
   kable_styling(latex_options = "HOLD_position")
 ```
