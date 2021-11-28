@@ -71,28 +71,28 @@ The setting of the experiment is as follows:
 
 
 
-# III. Major test method  
+# III. Significant Difference Testing Method  
 
-Our experiment data structure is already shown above. Based on the character of our data, we decide to use log odds to eliminate the influence of different sample sizes for different replicates. Log odds are defined as the chances of success divided by the chances of failure. In our case, log odds are defined by the probability of the number of sperm of first elution divided by the probability of the number of sperm of second elution. The reason is that using log odds is easily updated with new data. The advantage for log odds is that it is easy to visualize variables without changing the characters of variables and also make variables distributed more normal. It will avoid violating assumption of any further test. 
+Our experiment data structure is already shown above. Based on the character of our data, we decide to use log ratio of the number of counts of elution 1 to elution 2 instead of ratio to compare the number of counts of elution 1 and 2 between the groups. Log transformation can make it easy to see the difference of the mean ratios between the groups as well as reduce the skewness of the distribution of the ratio, which makes the distribution closer to the normal distribution.
 
-Then, we use one-way ANOVA (analysis of variance), also known as one-factor ANOVA, which is an extension of independent two-samples t-test for comparing means in a situation where there are more than two groups.
+Then, we used one-way ANOVA (analysis of variance), also known as one-factor ANOVA, which is an extension of independent two-samples t-test for comparing means in a situation where there are more than two groups.
 
 There are two major assumptions for one-way ANOVA. The data are normally distributed and the variance across groups is homogeneous.
 
-To check the normality, we check the density plot for each group. The density plot is a representation of the distribution of a numeric variable. It uses a kernel density estimate to show the probability density function of the variable. In our case, we use density plots for each group whether they have normal distribution or not. Then, we plot the QQ (quantile-quantile) plot for each group. QQ plot is a graphical technique for determining if two data sets come from populations with a normal distribution. To be precise, we test for Shapiro Test. Shapiro Test is a test of normality in frequentist statistics. In our setting, we choose the alpha value as 0.05. 
+To check the normality, we checked the density plot for each group. The density plot is a representation of the distribution of a numeric variable. It uses a kernel density estimate to show the probability density function of the variable. In our case, we use density plots for each group whether they have normal distribution or not. Then, we plot the QQ (quantile-quantile) plot for each group. QQ plot is a graphical technique for determining if two data sets come from populations with a normal distribution. To be precise, we used the Shapiro Test.  The Shapiro Test is a test of normality in frequentist statistics. In our setting, we choose the alpha value as 0.05. 
 
-Then, we check whether the variance across groups is homogeneous. The residuals versus fits plot can be used to check the homogeneity of variances. Also, we test Levene’s test, which is less sensitive to departures from the normal distribution in case our data is not a normal distribution.  
+Then, we checked whether the variance across groups is homogeneous. The residuals versus fits plot can be used to check the homogeneity of variances. Additionally, we used the Levene test, which is less sensitive to departures from the normal distribution in case our data is not a normal distribution.  
 
-After checking assumptions, we test for one-way ANOVA to test whether there is any siginificiant different between groups. The result and discussion are shown below. 
+After checking these assumptions, we used a one-way ANOVA to test whether there is any siginificiant difference between groups. The result and discussion are shown below. 
 
 
 # IV. Result & Discussion
 
 ## 1. Data Processing
 
-The head five line of original data is shown below. The shown data only contain part of information of group 1. The full data contain full information of four different groups with each 10 replicates. 
+The first five lines of original data is shown below. The shown data only contains part of the information of group 1. The full data contains all of the information for the four different groups with each of the 10 replicates. 
 
-```{r,echo=FALSE}
+```{r,echo=FALSE, warning = FALSE}
 library(knitr)
 kable(head(Elution_clean,5)) %>%
   kable_styling(position = "center") %>%
@@ -101,20 +101,20 @@ kable(head(Elution_clean,5)) %>%
 
 
 
-After cleaning and processing data, we clean the original data into following format and also calculate the log odds for each replicates. 
+Next, we transformed the original data into the following format and calculated the log ratio for each replicate. 
 
 
-```{r,echo=FALSE}
+```{r,echo=FALSE, warning = FALSE}
 kable(head(Elution_wide,5)) %>% 
   kable_styling(latex_options="scale_down") %>%
   kable_styling(latex_options = "HOLD_position")
 ```
 
-We visualize our log odds ratio of each replicate with boxplots. A box plot or boxplot is a method for graphically depicting groups of numerical data through their quartiles. Box plots may also have lines extending from the boxes indicating variability outside the upper and lower quartiles. In our case, the value of the x-axis represents the group belonging to this replicate. The value of the y-axis represents the log-odds value of Elution 1 to Elution 2 for this replicate. The darker blue and smaller spots represent that this replicate has a small total sperm number from two elution times. The lighter and bigger spots represent that this replicate has a large total sperm number from two elution times. 
+We visualized log ratio of the number of counts of elution 1 to elution 2 in each replicate as a blue dot with error bar shown as a red line. The error bar represents 95% confidence interval extending around the mean of log ratios in each group which is shown as a red dot. The darker blue and smaller point represents smaller total sperm number from two elution times. The lighter and bigger point represents a larger total sperm number from two elution times. 
 
-From the boxplots, we can investigate that group 1 has the lowest log-odds median ratio among the four groups. There is one outlier for both group 2 and group 3. 
+Based on the graph, group 1 seems to have a mean log ratio lower than that of the other three groups.
 
-```{r,echo=FALSE}
+```{r,echo=FALSE, warning = FALSE}
 elution_boxplot2
 ```
 
@@ -122,48 +122,92 @@ elution_boxplot2
 ## 2. Check assumption
 ### a. Normality
 
-As the description in part III., our steps are density plots, the QQ plots and Shapiro Test.
+As described in part III., we used the following processes to validate our normality assumptions: density plots, the QQ plots and Shapiro Test.
 
-Density plots for four groups are shown below. From density plots, we can investigate that four groups have approximate bell shape. 
+Density plots for four groups are shown below. From density plots, we can see that four groups are all approximately bell shaped. 
 
 ```{r,echo=FALSE,out.width='80%',out.height='70%'}
 Density_Plots
 ```
 
 
-QQ plots for four groups are shown below. From QQ plots, we can investigate that four groups approximate within the estimated range. 
+QQ plots for the four groups are shown below. From QQ plots, we can see that the four groups are approximately within the estimated range. 
 
 ```{r,echo=FALSE,out.width='80%',out.height='70%'}
 QQ_Plots
 ```
 
-To be more precise, we test for Shapiro Test. We extracted all p-value from four groups and summary into below chart. The null hyphothesis for Shapiro Test is that the population is normally distributed. Thus, if the p value is less than the chosen alpha level, then the null hypothesis is rejected and there is evidence that the data tested are not normally distributed. On the other hand, if the p value is greater than the chosen alpha level, then the null hypothesis (that the data came from a normally distributed population) can not be rejected. In our case, our alpha value is 0.05. All groups' p-value are larger than 0.05. Thus, we accept the null hypothesis. We can conclude that all four groups are normal distributed.
+\newpage
 
-```{r,echo=FALSE}
-rownames(Shap_Test) <- NULL
-kable(Shap_Test)%>%
-  kable_styling(position = "center") %>%
-  kable_styling(latex_options = "HOLD_position")
+To be more precise, we used the Shapiro Test to check this assumption numerically. The null hyphothesis for Shapiro Test is that the population is normally distributed. Thus, if the p value is less than the chosen alpha level, then the null hypothesis is rejected and there is evidence that the data tested are not normally distributed. On the other hand, if the p value is greater than the chosen alpha level, then the null hypothesis (that the data came from a normally distributed population) can not be rejected. In our case, our alpha value is 0.05. All groups' p-value are larger than 0.05. Thus, we accept the null hypothesis. We can conclude that all four groups are normally distributed.
+
+
+```{=latex}
+\begin{table}[!h]
+\centering
+\begin{tabular}{lll}
+\hline
+\multicolumn{3}{|c|}{Shapiro Test}   \\ \hline
+\multicolumn{1}{|c|}{Group}   & \multicolumn{1}{|c|}{Test Statistic} & \multicolumn{1}{|c|}{P-Value}  \\ \hline
+\multicolumn{1}{|c|}{Group 1} & \multicolumn{1}{|c|}{0.9107267}      & \multicolumn{1}{|c|}{0.2860200} \\ \hline
+\multicolumn{1}{|c|}{Group 2} & \multicolumn{1}{|c|}{0.9433447}      & \multicolumn{1}{|c|}{0.5907949} \\ \hline
+\multicolumn{1}{|c|}{Group 3} & \multicolumn{1}{|c|}{0.9416273}      & \multicolumn{1}{|c|}{0.5712591} \\ \hline
+\multicolumn{1}{|c|}{Group 4} & \multicolumn{1}{|c|}{0.8890707}      & \multicolumn{1}{|c|}{.1655346}  \\ \hline
+\end{tabular}
+\end{table}
 ```
+
 
 ### b. Homogeneous
 
-As the description in Part III, we use Levene’s test to test the variance across groups. The null hypothesis is that the population variances are equal. In our case, the p-value is larger than 0.05. Thus, we accept the null hypothesis. We can concluse the pupulation variances are equal.
+As the described in Part III, we used Levene’s test to test the variance across groups. The null hypothesis is that the population variances are equal. In our case, the p-value is larger than 0.05. Thus, we accept the null hypothesis. We can concluse the pupulation variances are equal.
 
-```{r,echo=FALSE}
-print(levene_result)
+```{=latex}
+\begin{table}[!h]
+\centering
+\begin{tabular}{|cc|}
+\hline
+\multicolumn{2}{|c|}{\textbf{Levene's Test For Homogeneity of Variance}} \\ \hline
+\multicolumn{1}{|c|}{F-value} & \multicolumn{1}{|c|}{P-Value} \\ \hline
+\multicolumn{1}{|c|}{1.4241} & \multicolumn{1}{|c|}{.2517} \\ \hline
+\end{tabular}
+\end{table}
 ```
 
-# 3. ANOVA analysis
+## 3. ANOVA analysis
 
-After checking the assumptions of ANOVA analysis, we can test ANOVA over four groups. The null hypothesis is that there is no significiant difference between groups. We attached the result of ANOVA below. Since the p-value is smaller than the alpha value, we can conclude that there must be at least one group is siginificiant different than other groups. Then, we test for Tukey multiple pairwise-comparsions. 
+After checking the assumptions of the ANOVA analysis, we ran an ANOVA test scross the four groups. The null hypothesis is that there is no significiant difference between groups. We attached the result of ANOVA below. Since the p-value is smaller than the alpha value, we can conclude that there must be at least one group is significiantly different than other groups. To validate this test, we also tested the ANOVA residuals for the normalityl. The p-value is larger than the alpha value. We can conclude that the residual is normal distributed.  Howvever, this test does not specify which groups contain the differences. To identify the specific groups that differ we used Tukey multiple pairwise-comparsions. 
 
+<header>ANOVA Results</header>
 
-```{r,echo=FALSE}
-summary(one.way)
+```{=latex}
+\begin{table}[!h]
+\centering
+\begin{tabular}{|ccllll|}
+\hline
+\multicolumn{6}{|c|}{\textbf{ANOVA Results}} \\ \hline
+\multicolumn{1}{|c|}{} & \multicolumn{1}{c|}{Df} & \multicolumn{1}{l|}{Sum Sq} & \multicolumn{1}{l|}{Mean Sq} & \multicolumn{1}{l|}{F-Value} & P-Value \\ \hline
+\multicolumn{1}{|c|}{group} & \multicolumn{1}{c|}{3} & \multicolumn{1}{l|}{23.20} & \multicolumn{1}{l|}{7.732} & \multicolumn{1}{l|}{5.8} & .00243 \\ \hline
+\multicolumn{1}{|l|}{Residuals} & \multicolumn{1}{l|}{36} & \multicolumn{1}{l|}{47.99} & \multicolumn{1}{l|}{1.333} & \multicolumn{1}{l|}{} &  \\ \hline
+\end{tabular}
+\end{table}
 ```
 
-For Tukey multiple pairwise-comparsions, we attched the result as below chart. As the p-value is less than the significance level 0.05, we can conclude that there are significant differences between the group 2-1 and the group 4-1. We can also valid from 95% confidence interval. The confident interval difference between group 2 and group 1 doesn't contain 0. The confident intervaldifference between group 4 and group 1 doesn't contain 0. Also, we test for the normality of ANOVA residual. The p-value is larger than the alpha value. We can conclude that the residual is normal distributed. 
+<header>Validation of ANOVA - Shapiro Test of residuals</header>
+
+```{=latex}
+\begin{table}[!h]
+\centering
+\begin{tabular}{|cc|}
+\hline
+\multicolumn{2}{|c|}{\textbf{Shapiro-Wilk normality test}} \\ \hline
+\multicolumn{1}{|c|}{Test Statistic} & P-Value \\ \hline
+\multicolumn{1}{|c|}{.96515} & .2501 \\ \hline
+\end{tabular}
+\end{table}
+```
+
+The results for the Tukey multiple pariwise-comparisons, are listed below. As the p-value is less than the significance level 0.05, we can conclude that there are significant differences between group 2 and group 1 as well as between group 4 and group 1. We can also see this from looking at the 95% confidence interval. The confidence interval relating to the comparison between group 2 and group 1 does not contain 0. Additionally, the confidence interval relating to the comparison between group 4 and group 1 doesn't contain 0. 
 
 ```{r,echo=FALSE}
 tukey <- as.data.frame(round(tukey.one.way$group,2))
@@ -174,11 +218,13 @@ kable(tukey, align="c") %>%
   kable_styling(latex_options = "HOLD_position")
 ```
 
+## 4. Sample size calculation
 
-```{r,echo=FALSE}
-shapiro.test(x = aov_residuals )
-```
+We also calculated sample size needed to detect any difference in the mean log ratio of the counts between group 1 and any other group with time of elution 1 longer than 30 minutes. 
+Assuming the true mean of group 1 is 1.42, the true mean of any group with time of elution 1 larger than 30 minutes is the mean of those of group 2, 3 and 4, or 3.05, and the pooled standard deviation is 1.15, the needed sample size is 14 for each group at the power of 0.8 and 0.008 significance level.
+
 
 # V. Conclusion 
 
-Based on our anlysis of ANOVA, if the p-value is smaller than our alpha value,we can conclude that there is significant difference between groups. Then, we conclude that there is significiant difference between the ratio of group 2 and group 1. Also, there is significant difference between the ratio of group 4 and group 1. 
+Based on our analysis of ANOVA, if the p-value is smaller than our alpha value,we can conclude that there is significant difference between groups. Then, based on the Tukey multiple pairwise-comparisons, we can conclude that there is a significant difference between the ratio of group 2 and group 1 as well as between group 4 and group 1. Whereas we cannot find any significant difference between group 3 and group1. This could be due to sampling error because the ratio of group 3 should be greater than group 2 theoretically.
+To detect the difference between the group 3 and group 1, 14 replicates for each group would be needed.
