@@ -15,7 +15,7 @@ source("Hypothesis_Testing.R", echo=FALSE)
 
 # I. Introduction
 
-This client is looking to understand the relationship between elution time and the amount of sperm extracted from cotton swabs. In other words, she is looking to test for a significant difference in the relative percentage of collected sperm between the four groups with differing lengths of time of elution. The client already has a dataset that was collected through the procedure of the experiment. The data contains the relative percentages of each replicate, by group. The client’s goal is to test for a significant difference in the relative percentage of collected sperm between the four groups. Our procedure divided into two parts: Checking for the assumption and checking ANOVA test. 
+Our client is Rena Poppers, a graduate student of Biomedical Forensic Sciences. This consulting project is aimed the initial preparation for her paper. She is looking to understand the relationship between elution time and the amount of sperm extracted from cotton swabs. In other words, Rena is looking to test for a significant difference in the relative percentage of collected sperm between the four groups with differing lengths of time of elution. The client already has a dataset that was collected through the procedure of the experiment. The data contains the relative percentages of each replicate, by group. The client’s goal is to test for a significant difference in the relative percentage of collected sperm between the four groups. Our procedure divided into two parts: Checking for the assumption and checking ANOVA test. 
 
 # II. Experiment setting
 
@@ -228,3 +228,5 @@ Assuming the true mean of group 1 is 1.42, the true mean of any group with time 
 
 Based on our analysis of ANOVA, if the p-value is smaller than our alpha value,we can conclude that there is significant difference between groups. Then, based on the Tukey multiple pairwise-comparisons, we can conclude that there is a significant difference between the ratio of group 2 and group 1 as well as between group 4 and group 1. Whereas we cannot find any significant difference between group 3 and group1. This could be due to sampling error because the ratio of group 3 should be greater than group 2 theoretically.
 To detect the difference between the group 3 and group 1, 14 replicates for each group would be needed.
+
+In the end, while group 1 is different from 2 and 4, the significant difference might happen before 30 min (group 2). The client might also repeats the experiments between 1 minutes and 30 minutes, such as 15 minutes. 
