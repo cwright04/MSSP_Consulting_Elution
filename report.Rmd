@@ -221,7 +221,7 @@ kable(tukey, align="c") %>%
 ## 4. Sample size calculation
 
 We also calculated sample size needed to detect any difference in the mean log ratio of the counts between group 1 and any other group with time of elution 1 longer than 30 minutes. 
-Assuming the true mean of group 1 is 1.42, the true mean of any group with time of elution 1 larger than 30 minutes is the mean of those of group 2, 3 and 4, or 3.05, and the pooled standard deviation is 1.15, the needed sample size is 14 for each group at the power of 0.8 and 0.008 significance level.
+Assuming the true mean of group 1 is 1.42, the true mean of any group with time of elution 1 larger than 30 minutes is the mean of those of group 2, 3 and 4, or 3.05, and the pooled standard deviation is 1.15, the needed sample size is 14 for each group at the power of 0.8 and 0.05 experiment-wise significance level.
 
 
 # V. Conclusion 
@@ -229,5 +229,5 @@ Assuming the true mean of group 1 is 1.42, the true mean of any group with time 
 Based on our analysis of ANOVA, if the p-value is smaller than our alpha value,we can conclude that there is significant difference between groups. Then, based on the Tukey multiple pairwise-comparisons, we can conclude that there is a significant difference between the ratio of group 2 and group 1 as well as between group 4 and group 1. Whereas we cannot find any significant difference between group 3 and group1. This could be due to sampling error because the ratio of group 3 should be greater than group 2 theoretically.
 To detect the difference between the group 3 and group 1, 14 replicates for each group would be needed.
 
-Additionally, one can see from looking at the plots alone that there appears to be an elution curve by time. While group 1 is different from group 2 and  group 4, the significant difference might occur before 30 minutes (group 2). If this is of interest we might suggest repeating the experiment at times leading up to the 30 minutes in order to investigate this further. For example, the experiment may be repeated at times between 1 minutes and 30 minutes, such as 15 minutes. 
+Additionally, one can see from looking at the plots alone that there appears to be an elution curve by time. While group 1 is different from group 2 and group 4, the significant difference might occur before 30 minutes (group 2). If this is of interest we might suggest repeating the experiment at times leading up to the 30 minutes in order to investigate this further. For example, the experiment may be repeated at times between 1 minutes and 30 minutes, such as 15 minutes. 
 
