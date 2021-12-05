@@ -231,3 +231,11 @@ To detect the difference between the group 3 and group 1, 14 replicates for each
 
 Additionally, one can see from looking at the plots alone that there appears to be an elution curve by time. While group 1 is different from group 2 and group 4, the significant difference might occur before 30 minutes (group 2). If this is of interest we might suggest repeating the experiment at times leading up to the 30 minutes in order to investigate this further. For example, the experiment may be repeated at times between 1 minutes and 30 minutes, such as 15 minutes. 
 
+# Appendix
+Log ratio of the number of counts of elution 1 to elution 2 for each replicate in the 4 groups are shown below.
+```{r,echo=FALSE, warning = FALSE}
+library(knitr)
+kable(Elution_wide[,1:8]) %>%
+  kable_styling(latex_options="scale_down") %>%
+  kable_styling(latex_options = "HOLD_position")
+```
